@@ -21,7 +21,7 @@
 (defn decrypt [secret encrypted-message]
   (let [cipher (Cipher/getInstance "AES/CBC/PKCS5Padding")
         skey-spec (SecretKeySpec. (sha256-bytes secret) "AES")
-        [msg,iv]  (->> (split encrypted-message #"~")
+        [iv, msg]  (->> (split encrypted-message #"~")
                        (map #(decode %)))
         iv_spec (IvParameterSpec. iv)]
     (.init cipher (Cipher/DECRYPT_MODE) skey-spec iv_spec)

@@ -1,3 +1,7 @@
+; Copyright (C) 2015 Dr. Thomas Schank  (DrTom@schank.ch, Thomas.Schank@algocon.ch)
+; Licensed under the terms of the GNU Affero General Public License v3.
+; See the "LICENSE.txt" file provided with this software.
+
 (ns cider-ci.open-session.encoder
   (:require 
     [clojure.data.codec.base64 :as base64]
@@ -22,13 +26,14 @@
   (encode [s] 
     (encode (.getBytes s "UTF-8")))
   (decode [s]
-    (-> (string/replace #"\s+" "")
+    (-> s 
+        (string/replace #"\s+" "")
         (string/replace "-" "+")
         (string/replace "_" "/")
         (#(case (mod (count %) 4)
-          2 (str s "==")
-          3 (str s "=")
-          s))
+            2 (str % "==")
+            3 (str % "=")
+            %))
         (.getBytes "UTF-8")
         base64/decode))
   )

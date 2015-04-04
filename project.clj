@@ -1,6 +1,6 @@
-(defproject cider-ci/open-session "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+(defproject cider-ci/open-session "1.0.0-beta.1"
+  :description "Platform and language agnostic encoding, encryption and signatures for session handling."
+  :url "https://github.com/cider-ci/cider-ci_open-session_clj"
   :license {:name "APGL"}
   :dependencies [
                  [org.bouncycastle/bcprov-jdk15on "1.52"]

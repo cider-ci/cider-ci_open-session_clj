@@ -31,5 +31,3 @@
          json/read-str  
          clojure.walk/keywordize-keys)))
 
-;(decrypt "secret" "wHGrlC7kOvd0T90uNlEc_A~jfUriLEgN7mhM3eLQJ6WsA")
-

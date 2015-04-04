@@ -1,7 +1,8 @@
 # Cider-CI Open-Session for Clojure 
 
-Platform and language agnostic encoding, encryption and signatures for session handling.
-
+The Cider-CI Open-Session projects provide platform and language agnostic
+encoding, encryption and signatures. They are used for session handling in
+Cider-CI itself. 
 
 ## License
 

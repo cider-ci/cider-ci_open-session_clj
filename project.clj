@@ -1,4 +1,4 @@
-(defproject cider-ci/open-session "1.1.0-beta.3"
+(defproject cider-ci/open-session "1.1.0"
   :description "Platform and language agnostic encoding, encryption, signature and password handling."
   :url "https://github.com/cider-ci/cider-ci_open-session_clj"
   :license {:name "APGL"}

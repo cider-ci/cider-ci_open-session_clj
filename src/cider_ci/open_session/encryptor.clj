@@ -3,10 +3,10 @@
 ; See the "LICENSE.txt" file provided with this software.
 
 (ns cider-ci.open-session.encryptor
-  (:import 
+  (:import
     [javax.crypto KeyGenerator SecretKey Cipher]
     [javax.crypto.spec IvParameterSpec SecretKeySpec]
-    [org.bouncycastle.jce.provider BouncyCastleProvider] 
+    [org.bouncycastle.jce.provider BouncyCastleProvider]
     )
   (:require
     [pandect.algo.sha256 :refer [sha256-bytes]]
@@ -18,6 +18,11 @@
 (java.security.Security/addProvider
   (org.bouncycastle.jce.provider.BouncyCastleProvider.))
 
+(try (doto (.getDeclaredField (Class/forName "javax.crypto.JceSecurity") "isRestricted")
+       (.setAccessible true)
+       (.set nil false))
+     (catch Throwable _ ))
+
 (defn decrypt [secret encrypted-message]
   (let [cipher (Cipher/getInstance "AES/CBC/PKCS5Padding")
         skey-spec (SecretKeySpec. (sha256-bytes secret) "AES")
@@ -28,6 +33,6 @@
     (->> (.doFinal cipher msg)
          (map char)
          (apply str)
-         json/read-str  
+         json/read-str
          clojure.walk/keywordize-keys)))
 

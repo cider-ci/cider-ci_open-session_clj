@@ -1,8 +1,9 @@
-(defproject cider-ci/open-session "1.1.2-beta.2"
+(defproject cider-ci/open-session "1.1.2-beta.3"
   :description "Platform and language agnostic encoding, encryption, signature and password handling."
   :url "https://github.com/cider-ci/cider-ci_open-session_clj"
   :license {:name "APGL"}
   :dependencies [
+                 [de.svenkubiak/jBCrypt "0.4"]
                  [org.bouncycastle/bcprov-jdk15on "1.52"]
                  [org.clojure/clojure "1.6.0"]
                  [org.clojure/data.codec "0.1.0"]
@@ -10,5 +11,4 @@
                  [pandect "0.5.1"]
                  [ring/ring-core "1.3.2"]
                  ]
-  :java-source-paths ["lib/jBCrypt/src"]
   )

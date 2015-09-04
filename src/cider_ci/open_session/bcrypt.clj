@@ -3,8 +3,8 @@
 ; See the "LICENSE.txt" file provided with this software.
 
 (ns cider-ci.open-session.bcrypt
-  (:import 
-    [org.mindrot.jbcrypt BCrypt]
+  (:import
+    [drtom.jbcrypt BCrypt]
     ))
 
 (defn hashpw [plain_password]

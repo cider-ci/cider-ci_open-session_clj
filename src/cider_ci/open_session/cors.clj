@@ -6,28 +6,31 @@
   (:require
     [ring.util.response :as response]))
 
-(defn wrap [handler]
+(defn wrap [handler & {:keys [enable] :or {enable true}}]
   "This wrapper adds the Access-Control-Allow-Origin and
   Access-Control-Allow-Credentials headers to the response. The value of the
   Access-Control-Allow-Credentials is based on the first present request header
   cors-origin, origin, pair of scheme and host, or finally '*' if non of the
-  previous was found." 
+  previous was found."
   (fn [request]
-    (-> (handler request)
-        (response/header 
-          "Access-Control-Allow-Origin" (or 
-                                          (-> request :headers (get "cors-origin"))
-                                          (-> request :headers (get "origin"))
-                                          (let [scheme  (-> request :scheme name)
-                                                host  (-> request :headers (get "host"))]
-                                            (when (and scheme host) (str scheme "://" host)))
-                                          "*"))
-        (response/header
-          "Access-Control-Allow-Credentials" "true")
-        (response/header
-          "Access-Control-Allow-Headers" "Content-Type, Accept, *")
-        (response/header
-          "Access-Control-Allow-Methods:" "CONNECT, DELETE, GET, HEAD, OPTIONS, POST, PUT, TRACE, *")
-        )))
+    (let [response (handler request)]
+      (if-not enable
+        response
+        (-> response
+            (response/header
+              "Access-Control-Allow-Origin" (or
+                                              (-> request :headers (get "cors-origin"))
+                                              (-> request :headers (get "origin"))
+                                              (let [scheme  (-> request :scheme name)
+                                                    host  (-> request :headers (get "host"))]
+                                                (when (and scheme host) (str scheme "://" host)))
+                                              "*"))
+            (response/header
+              "Access-Control-Allow-Credentials" "true")
+            (response/header
+              "Access-Control-Allow-Headers" "Content-Type, Accept, *")
+            (response/header
+              "Access-Control-Allow-Methods" "CONNECT, DELETE, GET, HEAD, OPTIONS, POST, PUT, TRACE, *")
+            )))))
 
 

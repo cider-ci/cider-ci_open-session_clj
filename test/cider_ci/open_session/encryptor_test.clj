@@ -1,5 +1,5 @@
-(ns cider-ci.open-session.encryptor-test 
-  (:require 
+(ns cider-ci.open-session.encryptor-test
+  (:require
     [clojure.test :refer :all]
     [cider-ci.open-session.encryptor :refer :all]
     ))
@@ -16,7 +16,13 @@
        "-41QUcGiYk7IEGwELFXdWN4VY_f9rcuuMBd7-zviX65eaX2MKs9fwk2CcRI8z9p4twqDV44"
        "YIFvi5A7F4olio5DczkxTqacg6jgLEQ"))
 
+(->> (clojure.string/split encrypt-of-fixed-object #"~")
+     (map cider-ci.open-session.encoder/decode) first count)
 
 (deftest fixed-decrypt-test []
   (is (= fixed-object (decrypt "secret" encrypt-of-fixed-object))
       ))
+
+(deftest encrypt-decrypt-inavariance
+  (is (= fixed-object
+         (->> fixed-object (encrypt "secret") (decrypt "secret")))))
